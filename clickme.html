@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Button */
+#startBtn {
+  margin-top: 40vh;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(45deg, #4DD7FF, #75F2FF);
+  color: white;
+  box-shadow: 0 0 20px rgba(77, 221, 255, 0.6);
+}
+
+/* Chest */
+#chestContainer {
+  display: none;
+  position: relative;
+  width: 300px;
+  margin: auto;
+  margin-top: 12vh;
+  transition: transform 2s ease;
+}
+
+/* Image */
+#chestImg {
+  width: 100%;
+}
+
+/* Heart (BLUE) */
+#heartSpot {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  font-size: 40px;
+  cursor: pointer;
+  animation: beat 1s infinite;
+  filter: hue-rotate(180deg); /* makes heart blue */
+}
+
+@keyframes beat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+/* Zoom animation */
+.zoom {
+  transform: scale(2.5);
+}
+
+/* Text */
+#scanText {
+  margin-top: 20px;
+  color: #75FFE8;
+}
+
+/* Final */
+#final {
+  display: none;
+  margin-top: 10vh;
+  animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Circle image */
+.circle-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4DF9FF;
+  box-shadow: 0 0 15px #4DD7FF;
+  display: block;
+  margin: 20px auto;
+}
+</style>
+</head>
+
+<body>
+
+<button id="startBtn">
+  Hey lady… tap where my heart is
+</button>
+
+<div id="chestContainer">
+  <img id="chestImg" src="https://i.imgur.com/8QfKuz1.png">
+  <div id="heartSpot">❤️</div>
+  <div id="scanText"></div>
+</div>
+
+<div id="final">
+  <h2>You found it</h2>
+
+  <img src="./couple.jpg" class="circle-img" alt="Couple Image">
+
+<audio id="music" src="./song.mp3" autoplay muted loop></audio>
+
+<button onclick="document.getElementById('music').muted = false">Play Sound</button>
+
+
+  <p style="color:#4DD7FF; font-size:18px;">
+     hey beautiful lady you are into my heart 😚
+  </p>
+</div>
+
+<script>
+const startBtn = document.getElementById("startBtn");
+const chest = document.getElementById("chestContainer");
+const heart = document.getElementById("heartSpot");
+const final = document.getElementById("final");
+const music = document.getElementById("music");
+const scanText = document.getElementById("scanText");
+
+// Button click
+startBtn.onclick = function() {
+  startBtn.style.display = "none";
+  chest.style.display = "block";
+};
+
+// Typing effect
+function typeText(text, element, speed = 40) {
+  let i = 0;
+  element.innerHTML = "";
+  const interval = setInterval(() => {
+    element.innerHTML += text[i];
+    i++;
+    if (i >= text.length) clearInterval(interval);
+  }, speed);
+}
+
+// Heart click
+heart.onclick = function() {
+  typeText("Scanning... locating heart", scanText);
+
+  setTimeout(() => {
+    chest.classList.add("zoom"); // ZOOM happens here
+  }, 1200);
+
+  setTimeout(() => {
+    chest.style.display = "none";
+    final.style.display = "block";
+
+    try {
+      music.currentTime = 30;
+      music.play();
+    } catch(e) {
+      console.log(e);
+    }
+
+  }, 3000);
+};
+</script>
+
+</body>
+</html>
